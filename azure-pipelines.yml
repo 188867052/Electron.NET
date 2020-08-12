@@ -42,52 +42,16 @@ steps:
   displayName: Docker build
   inputs:
     command: 'build'
-    Dockerfile: '**/IdentityServer/Dockerfile'
-    arguments: '-t 542153354/identityserver4:v1.0'
+    Dockerfile: '**/ElectronNET.WebApp/Dockerfile'
+    arguments: '-t 542153354/electronnet:v1.0'
 
 - task: CmdLine@2
   displayName: Docker push
   inputs:
-    script: 'docker push 542153354/identityserver4:v1.0'
+    script: 'docker push 542153354/electronnet:v1.0'
 
 - task: CmdLine@2
   displayName: deploy to TencentCloud
   inputs:
     script: |
-      sshpass -p "$(TencentCloudPassword)" ssh -o StrictHostKeyChecking=no -t -t ubuntu@$(TencentCloudIP) bash -s < deploy-server.sh
-
-- task: Docker@2
-  displayName: Docker build
-  inputs:
-    command: 'build'
-    Dockerfile: '**/MvcClient/Dockerfile'
-    arguments: '-t 542153354/mvcclient:v1.0'
-
-- task: CmdLine@2
-  displayName: Docker push
-  inputs:
-    script: 'docker push 542153354/mvcclient:v1.0'
-
-- task: CmdLine@2
-  displayName: deploy to TencentCloud
-  inputs:
-    script: |
-      sshpass -p "$(TencentCloudPassword)" ssh -o StrictHostKeyChecking=no -t -t ubuntu@$(TencentCloudIP) bash -s < deploy-mvc.sh
-
-- task: Docker@2
-  displayName: Docker build
-  inputs:
-    command: 'build'
-    Dockerfile: '**/Api/Dockerfile'
-    arguments: '-t 542153354/api:v1.0'
-
-- task: CmdLine@2
-  displayName: Docker push
-  inputs:
-    script: 'docker push 542153354/api:v1.0'
-
-- task: CmdLine@2
-  displayName: deploy to TencentCloud
-  inputs:
-    script: |
-      sshpass -p "$(TencentCloudPassword)" ssh -o StrictHostKeyChecking=no -t -t ubuntu@$(TencentCloudIP) bash -s < deploy-api.sh
+      sshpass -p "$(TencentCloudPassword)" ssh -o StrictHostKeyChecking=no -t -t ubuntu@$(TencentCloudIP) bash -s < deploy.sh
